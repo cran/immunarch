@@ -436,9 +436,9 @@ summary {
 <p>The package provides several IO functions:</p>
 <ul>
 <li><p><code>repLoad</code> - to load the repertoires, having compatible format.</p></li>
-<li><p><code>repSave</code> - to save changes and to write the repertoire data to a file in a specific format (<code>immunarch</code>, VDJtools or MonetDB).</p></li>
+<li><p><code>repSave</code> - to save changes and to write the repertoire data to a file in a specific format (<code>immunarch</code>, VDJtools).</p></li>
 </ul>
-<p><code>repLoad</code> has the <code>.format</code> argument that sets the format for input repertoire files. Do not provide it if you want <code>immunarch</code> to detect the formats and parse files automatically! In case you want to force the package to parse the data in a specific format, you can choose one of the several options for the argument:</p>
+<p><code>repLoad</code> detects the input file format automatically. <code>immunarch</code> currently support the following immune repertoire data formats:</p>
 <ul>
 <li><p><code>&quot;immunarch&quot;</code> - current software tool, in case you forgot it :)</p></li>
 <li><p><code>&quot;immunoseq&quot;</code> - <a href="http://www.adaptivebiotech.com/immunoseq" class="uri">http://www.adaptivebiotech.com/immunoseq</a></p></li>
@@ -574,20 +574,19 @@ list(data = res_db, meta = META)</code></pre>
 <h2>Get the most abundant clonotypes</h2>
 <p>The function returns the most abundant clonotypes for the given repertoire:</p>
 <pre class="r"><code>top(immdata$data[[1]])</code></pre>
-<pre><code>## # A tibble: 11 x 15
+<pre><code>## # A tibble: 10 x 15
 ##    Clones Proportion CDR3.nt CDR3.aa V.name D.name J.name V.end D.start D.end
 ##     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;
-##  1    206    0.0206  TGCGCC… CASSQE… TRBV4… TRBD1  TRBJ2…    16      18    26
-##  2    193    0.0193  TGCGCC… CASSYR… TRBV4… TRBD1  TRBJ2…    11      13    18
-##  3     79    0.0079  TGTGCC… CATSTN… TRBV15 TRBD1  TRBJ2…    11      16    22
-##  4     64    0.0064  TGTGCC… CATSIG… TRBV15 TRBD2  TRBJ2…    11      19    25
-##  5     62    0.0062  TGCGCC… CASQGD… TRBV4… TRBD1  TRBJ1…     8      13    19
-##  6     56    0.0056  TGTGCC… CASSPW… TRBV27 TRBD1  TRBJ1…    11      16    23
-##  7     54    0.0054  TGCGCC… CASSQD… TRBV4… TRBD1  TRBJ2…    16      21    26
-##  8     35    0.0035  TGTGCC… CASSEE… TRBV2  TRBD1  TRBJ1…    15      17    20
-##  9     34    0.0034  TGCGCC… CASSQP… TRBV4… TRBD1  TRBJ2…    14      23    28
-## 10     29    0.00290 TGTGCC… CASSWV… TRBV6… TRBD1  TRBJ2…    12      20    25
-## 11     29    0.00290 TGTGCC… CASSFR… TRBV27 TRBD1  TRBJ2…    13      16    23
+##  1    173    0.0204  TGCGCC… CASSQE… TRBV4… TRBD1  TRBJ2…    16      18    26
+##  2    163    0.0192  TGCGCC… CASSYR… TRBV4… TRBD1  TRBJ2…    11      13    18
+##  3     66    0.00776 TGTGCC… CATSTN… TRBV15 TRBD1  TRBJ2…    11      16    22
+##  4     54    0.00635 TGTGCC… CATSIG… TRBV15 TRBD2  TRBJ2…    11      19    25
+##  5     48    0.00565 TGTGCC… CASSPW… TRBV27 TRBD1  TRBJ1…    11      16    23
+##  6     48    0.00565 TGCGCC… CASQGD… TRBV4… TRBD1  TRBJ1…     8      13    19
+##  7     40    0.00471 TGCGCC… CASSQD… TRBV4… TRBD1  TRBJ2…    16      21    26
+##  8     31    0.00365 TGTGCC… CASSEE… TRBV2  TRBD1  TRBJ1…    15      17    20
+##  9     30    0.00353 TGCGCC… CASSQP… TRBV4… TRBD1  TRBJ2…    14      23    28
+## 10     28    0.00329 TGTGCC… CASSWV… TRBV6… TRBD1  TRBJ2…    12      20    25
 ## # … with 5 more variables: J.start &lt;int&gt;, VJ.ins &lt;dbl&gt;, VD.ins &lt;dbl&gt;,
 ## #   DJ.ins &lt;dbl&gt;, Sequence &lt;lgl&gt;</code></pre>
 </div>
@@ -606,20 +605,20 @@ list(data = res_db, meta = META)</code></pre>
 <h2>Get subset of clonotypes with a specific V gene</h2>
 <p>It is simple to subset data frame according to labels in the specified index. In the example the resulting data frame contains only records with ‘TRBV10-1’ V gene:</p>
 <pre class="r"><code>filter(immdata$data[[1]], V.name == 'TRBV10-1')</code></pre>
-<pre><code>## # A tibble: 26 x 15
+<pre><code>## # A tibble: 24 x 15
 ##    Clones Proportion CDR3.nt CDR3.aa V.name D.name J.name V.end D.start D.end
 ##     &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt;   &lt;int&gt; &lt;int&gt;
-##  1      2     0.0002 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      20    25
-##  2      2     0.0002 TGCGCC… CASSDG… TRBV1… TRBD1  TRBJ2…    13      15    22
-##  3      2     0.0002 TGCGCC… CASSGD… TRBV1… TRBD2  TRBJ2…     8      10    15
-##  4      1     0.0001 TGCGCC… CASSEA… TRBV1… TRBD2  TRBJ2…    14      21    25
-##  5      1     0.0001 TGCGCC… CATLRS… TRBV1… TRBD1  TRBJ2…     6       7     9
-##  6      1     0.0001 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      20    22
-##  7      1     0.0001 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      17    21
-##  8      1     0.0001 TGCGCC… CASRAS… TRBV1… TRBD2  TRBJ2…    10      13    21
-##  9      1     0.0001 TGCGCC… CASRGS… TRBV1… TRBD1  TRBJ2…    10      11    13
-## 10      1     0.0001 TGCGCC… CASRRD… TRBV1… TRBD1  TRBJ2…     8      13    19
-## # … with 16 more rows, and 5 more variables: J.start &lt;int&gt;, VJ.ins &lt;dbl&gt;,
+##  1      2   0.000235 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      20    25
+##  2      2   0.000235 TGCGCC… CASSDG… TRBV1… TRBD1  TRBJ2…    13      15    22
+##  3      1   0.000118 TGCGCC… CASSGD… TRBV1… TRBD2  TRBJ2…     8      10    15
+##  4      1   0.000118 TGCGCC… CATLRS… TRBV1… TRBD1  TRBJ2…     6       7     9
+##  5      1   0.000118 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      20    22
+##  6      1   0.000118 TGCGCC… CASSES… TRBV1… TRBD2  TRBJ2…    16      17    21
+##  7      1   0.000118 TGCGCC… CASRAS… TRBV1… TRBD2  TRBJ2…    10      13    21
+##  8      1   0.000118 TGCGCC… CASRRD… TRBV1… TRBD1  TRBJ2…     8      13    19
+##  9      1   0.000118 TGCGCC… CASSEV… TRBV1… TRBD1  TRBJ2…    14      19    24
+## 10      1   0.000118 TGCGCC… CASSEG… TRBV1… TRBD2  TRBJ2…    13      19    27
+## # … with 14 more rows, and 5 more variables: J.start &lt;int&gt;, VJ.ins &lt;dbl&gt;,
 ## #   VD.ins &lt;dbl&gt;, DJ.ins &lt;dbl&gt;, Sequence &lt;lgl&gt;</code></pre>
 </div>
 </div>
@@ -628,9 +627,9 @@ list(data = res_db, meta = META)</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;downsample&quot;, 100)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
-##      89      97      93      99      90      96      86      96      87     100 
+##      97      98      96     100      84      94      89      98      85      99 
 ##     MS5     MS6 
-##      86     100</code></pre>
+##      81     100</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;sample&quot;, .n = 10)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
