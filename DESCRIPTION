@@ -1,7 +1,7 @@
 Package: immunarch
 Type: Package
 Title: Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires
-Version: 0.6.5
+Version: 0.6.6
 Authors@R: c(
     person("Vadim I.", "Nazarov", , "vdm.nazarov@gmail.com", c("aut", "cre")),
     person("Vasily O.", "Tsvetkov", , role = "aut"),
@@ -34,13 +34,13 @@ Depends: R (>= 3.5.0), ggplot2 (>= 3.1.0), dplyr (>= 0.8.0), dtplyr (>=
         1.0.0), data.table (>= 1.12.6), patchwork
 LinkingTo: Rcpp
 Suggests: knitr (>= 1.8), roxygen2 (>= 3.0.0), testthat (>= 2.1.0),
-        pkgdown (>= 0.1.0), assertthat
+        pkgdown (>= 0.1.0), assertthat, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 LazyData: true
 NeedsCompilation: yes
-Packaged: 2020-06-13 23:24:01 UTC; vdn
+Packaged: 2021-07-06 14:16:36 UTC; user
 Author: Vadim I. Nazarov [aut, cre],
   Vasily O. Tsvetkov [aut],
   Eugene Rumynskiy [aut],
@@ -50,4 +50,4 @@ Author: Vadim I. Nazarov [aut, cre],
   ImmunoMind [cph, fnd]
 Maintainer: Vadim I. Nazarov <vdm.nazarov@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-06-14 17:40:06 UTC
+Date/Publication: 2021-07-07 08:20:09 UTC

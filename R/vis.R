@@ -792,7 +792,8 @@ vis_public_frequencies <- function(.data, .by = NA, .meta = NA,
   } else if (.type == "mean") {
     melted_pr <- melted_pr %>%
       group_by(Sequence, Samples) %>%
-      summarise(Value = mean(value, na.rm = TRUE))
+      summarise(Value = mean(value, na.rm = TRUE)) %>%
+      as.data.table()
 
     p <- ggplot() +
       geom_jitter(aes(x = Value, y = Samples), data = melted_pr) +
@@ -1861,6 +1862,10 @@ vis_bar_stacked <- function(.data, .by = NA, .meta = NA,
 #' data(immdata)
 #' clp <- repClonality(immdata$data, "clonal.prop")
 #' vis(clp)
+#'
+#' hom <- repClonality(immdata$data, "homeo");
+#' # Remove p values and points from the plot
+#' vis(hom, .by = "Status", .meta = immdata$meta, .test = FALSE, .points = FALSE)
 #' @export
 vis.immunr_clonal_prop <- function(.data, .by = NA, .meta = NA, .errorbars = c(0.025, 0.975), .errorbars.off = FALSE, .points = TRUE, .test = TRUE, .signif.label.size = 3.5, ...) {
   # ToDo: this and other repClonality and repDiversity functions doesn't work on a single repertoire. Fix it
