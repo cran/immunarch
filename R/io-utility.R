@@ -9,6 +9,8 @@
 
   f <- file(.filename, "r")
   l <- readLines(f, 1)
+  # use 2nd line of file for JSON formats
+  l2 <- ifelse(str_trim(l) == "{", readLines(f, 1), NA)
   close(f)
 
   if (any(str_detect(l, c("MiTCRFullExport", "mitcr")))) {
@@ -21,7 +23,7 @@
     res_format <- "migmap"
   } else if (str_detect(l, "CDR3.amino.acid.sequence") && str_detect(l, "Umi.count")) {
     res_format <- "tcr"
-  } else if (str_detect(tolower(l), "cdr3nt") && str_detect(tolower(l), "vend") && str_detect(tolower(l), "v")) {
+  } else if (str_detect(tolower(l), "frequency") && str_detect(tolower(l), "cdr3nt") && str_detect(tolower(l), "v")) {
     res_format <- "vdjtools"
   } else if (str_detect(tolower(l), "count") && str_detect(tolower(l), "sequence") && str_detect(tolower(l), "d segment")) {
     res_format <- "vdjtools"
@@ -57,6 +59,14 @@
     res_format <- "immunarch"
   } else if (str_detect(l, "AAseq") && str_detect(l, "Vregion") && str_detect(l, "Frequency")) {
     res_format <- "catt"
+  } else if (str_detect(l, "Number of reads") && str_detect(l, "Amino acid sequence") && str_detect(l, "V gene")) {
+    res_format <- "rtcr"
+  } else if (str_detect(l, "seqId") && str_detect(l, "cdrNucSeq") && str_detect(l, "cdrAASeq")) {
+    res_format <- "imseq"
+  } else if (!is.na(l2)) {
+    if (str_trim(l2) == "\"clones\": [") {
+      res_format <- "vidjil"
+    }
   }
 
   res_format
@@ -79,7 +89,7 @@
 
   i <- 1
 
-  while (is.na(recomb_type) && i < 100) {
+  while (is.na(recomb_type) && i < 100 && !is.na(.name[i])) {
     if (any(str_detect(.name[i], c("TCRA", "TRAV", "TCRG", "TRGV", "IGKV", "IGLV")))) {
       recomb_type <- "VJ"
     } else if (any(str_detect(.name[i], c("TCRB", "TRBV", "TCRD", "TRDV", "IGHV")))) {
@@ -101,14 +111,14 @@
                           .vd.insertions, .dj.insertions, .total.insertions,
                           .skip, .sep, .add = NA) {
   table.colnames <- colnames(readr::read_delim(.filename,
-                                               col_types = cols(),
-                                               delim = .sep,
-                                               quote = "",
-                                               escape_double = FALSE,
-                                               comment = "",
-                                               n_max = 1,
-                                               trim_ws = TRUE,
-                                               skip = .skip
+    col_types = cols(),
+    delim = .sep,
+    quote = "",
+    escape_double = FALSE,
+    comment = "",
+    n_max = 1,
+    trim_ws = TRUE,
+    skip = .skip
   ))
 
   swlist <- list(
@@ -201,4 +211,64 @@
   }
 
   .data
+}
+
+.as_tsv <- function(.delim_file) {
+  df <- readr::read_tsv(.delim_file, comment = "#")
+  if (ncol(df) == 1) {
+    # treat file as csv and convert it to temporary tsv
+    df <- readr::read_delim(.delim_file, comment = "#")
+    tsv_file <- tempfile()
+    readr::write_tsv(df, tsv_file)
+    return(tsv_file)
+  } else {
+    return(.delim_file)
+  }
+}
+
+.check_empty_repertoires <- function(.data) {
+  empty_reps <- .data %>%
+    sapply(function(repertoire) {
+      nrow(repertoire) == 0
+    }) %>%
+    sum()
+  if (empty_reps > 0) {
+    warning("Input data contains ", empty_reps, " empty repertoire(s)!")
+  }
+}
+
+.validate_repertoires_data <- function(.data) {
+  if (!inherits(.data, "list")) {
+    stop("Wrong input data format: expected list of immune repertoires!")
+  } else if (length(.data) == 0) {
+    stop("Input list of immune repertoires is empty!")
+  }
+  .check_empty_repertoires(.data)
+}
+
+.validate_immdata <- function(.immdata) {
+  if (!inherits(.immdata, "list")) {
+    stop("Input data is not a list; please pass Immunarch dataset object as input.")
+  } else if (length(.immdata) < 2 |
+    !("data" %in% names(.immdata)) |
+    !("meta" %in% names(.immdata))) {
+    stop(
+      "Input list must contain \"data\" and \"meta\" elements;\n",
+      "please pass Immunarch dataset object as input."
+    )
+  } else if (!inherits(.immdata$data, "list") | !is.data.frame(.immdata$meta)) {
+    stop(
+      "Wrong input data format: expected list with \"data\" as list ",
+      "and \"meta\" as dataframe;\n",
+      "please pass Immunarch dataset object as input."
+    )
+  } else if (length(.immdata$data) == 0) {
+    stop("Input list of immune repertoires in \"data\" is empty!")
+  } else if (length(.immdata$data) != nrow(.immdata$meta)) {
+    stop(
+      "Number of samples is different in data (", length(.immdata$data),
+      ") and metadata (", nrow(.immdata$meta), ")!"
+    )
+  }
+  .check_empty_repertoires(.immdata$data)
 }

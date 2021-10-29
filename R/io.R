@@ -17,7 +17,8 @@ if (getRversion() >= "2.15.1") {
 #' @concept io
 #'
 #' @importFrom readr read_delim read_tsv read_csv col_integer col_character col_double col_logical col_guess cols write_lines
-#' @importFrom stringr str_split str_detect str_replace_all
+#' @importFrom jsonlite read_json
+#' @importFrom stringr str_split str_detect str_replace_all str_trim
 #' @importFrom methods as
 #' @importFrom dplyr contains first
 #' @importFrom utils read.table
@@ -165,8 +166,7 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
     # Parse the file
     if (is.na(cur_format)) {
       message("unsupported format, skipping")
-    }
-    else {
+    } else {
       message(cur_format)
 
       parse_fun <- switch(cur_format,
@@ -184,13 +184,15 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
         archer = parse_archer,
         immunarch = parse_immunarch,
         catt = parse_catt,
+        rtcr = parse_rtcr,
+        imseq = parse_imseq,
+        vidjil = parse_vidjil,
         NA
       )
 
       if (suppressWarnings(is.na(parse_fun))) {
         message("unknown format, skipping")
-      }
-      else {
+      } else {
         parse_res <- parse_fun(.path, .mode)
 
         if (is.null(parse_res)) {
@@ -222,11 +224,10 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
     metadata <- tibble()
 
     for (.filepath in .files) {
-      message('  -- [', match(.filepath, .files), '/', length(.files), '] Parsing "', .filepath, '" -- ', appendLF = FALSE)
+      message("  -- [", match(.filepath, .files), "/", length(.files), '] Parsing "', .filepath, '" -- ', appendLF = FALSE)
       if (!file.exists(.filepath)) {
         message('Can\'t find\t"', .filepath, '", skipping')
-      }
-      else {
+      } else {
         # Check for the type: repertoire, metadata or barcodes
         if (stringr::str_detect(.filepath, "metadata")) {
           message("metadata")
@@ -237,11 +238,9 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
           if (!("Sample" %in% colnames(metadata))) {
             stop('No "Sample" column found in the metadata file. The "Sample" column with the names of samples without extensions (e.g., ".txt", ".tsv") is required. Please provide it and run the parsing again.')
           }
-        }
-        else if (stringr::str_detect(.filepath, "barcode")) {
+        } else if (stringr::str_detect(.filepath, "barcode")) {
           # TODO: add the barcode processing subroutine to split by samples
-        }
-        else {
+        } else {
           repertoire <- .read_repertoire(.filepath, .format, .mode, .coding)
           if (length(repertoire) != 0) {
             parsed_batch <- c(parsed_batch, repertoire)
@@ -434,6 +433,7 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
 #'
 #' @importFrom utils packageVersion
 #' @importFrom plyr mapvalues
+#' @importFrom purrr map
 #'
 #' @description The \code{repSave} function is deigned to save your data to the disk
 #' in desirable format. Currently supports "immunarch" and "vdjtools" file formats.
@@ -454,6 +454,8 @@ repLoad <- function(.path, .format = NA, .mode = "paired", .coding = TRUE) {
 #'
 #' @examples
 #' data(immdata)
+#' # Reduce data to save time on examples
+#' immdata$data <- purrr::map(immdata$data, ~ .x %>% head(10))
 #' dirpath <- tempdir()
 #' # Save the list of repertoires
 #' repSave(immdata, dirpath)

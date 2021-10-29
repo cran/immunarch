@@ -374,8 +374,7 @@ apply_symm <- function(.datalist, .fun, ..., .diag = NA, .verbose = TRUE) {
     for (j in i:length(.datalist)) {
       if (i == j && is.na(.diag)) {
         res[i, j] <- NA
-      }
-      else {
+      } else {
         res[i, j] <- .fun(.datalist[[i]], .datalist[[j]], ...)
       }
       if (.verbose) add_pb(pb)
@@ -394,8 +393,7 @@ apply_asymm <- function(.datalist, .fun, ..., .diag = NA, .verbose = TRUE) {
     for (j in 1:length(.datalist)) {
       if (i == j && is.na(.diag)) {
         res[i, j] <- NA
-      }
-      else {
+      } else {
         res[i, j] <- .fun(.datalist[[i]], .datalist[[j]], ...)
       }
       if (.verbose) add_pb(pb)
@@ -475,4 +473,12 @@ load_segments <- function(.path, .alias, .gene_df = GENE_SEGMENTS, .filter = NA)
   segm <- segm[c("alias", "species", "gene", "family_id", "segment_id", "allele_id", "reference_point", "sequence")]
   segm <- segm[order(segm$gene, segm$allele_id), ]
   new_gs <- rbind(segm, .gene_df[.gene_df$alias != .alias, ])
+}
+
+as_numeric_or_fail <- function(.string) {
+  result <- as.numeric(.string)
+  if (is.na(result)) {
+    stop(paste0("\"", .string, "\" is not a valid number."))
+  }
+  return(result)
 }

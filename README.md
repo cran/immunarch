@@ -32,7 +32,7 @@ repDiversity(immdata$data) %>% vis(.by = "Status", .meta = immdata$meta)      # 
 
 ### From Berkeley with devotion
 
-`immunarch` is brought to you by [ImmunoMind](https://immunomind.io) --- a [UC Berkeley SkyDeck](https://www.forbes.com/sites/avivalegatt/2019/01/07/launch-your-startup-at-these-five-college-incubators/) startup. ImmunoMind Data Science tools for single-cell and immunomics [exploration](https://immunarch.com) and [biomarker discovery](https://immunomind.io) are trusted by researchers from top pharma companies and universities, including 10X Genomics, Pfizer, Regeneron, UCSF, MIT, Stanford, John Hopkins School of Medicine and Vanderbilt University.
+`immunarch` is brought to you by [ImmunoMind](https://immunomind.io) --- a [UC Berkeley SkyDeck](https://www.forbes.com/sites/avivalegatt/2019/01/07/launch-your-startup-at-these-five-college-incubators/) startup. ImmunoMind improves the design of adoptive T-cell therapies such as CAR-T by precisely identifying T-cell subpopulations and their immune profile. ImmunoMind's tools are trusted by researchers from top pharma companies and universities, including 10X Genomics, Pfizer, Regeneron, UCSF, MIT, Stanford, John Hopkins School of Medicine and Vanderbilt University.
 
 [![Follow](https://img.shields.io/twitter/follow/immunomind.svg?style=social)](https://twitter.com/intent/follow?screen_name=immunomind)
 
@@ -116,7 +116,7 @@ You can find the list of releases of `immunarch` here: https://github.com/immuno
 
     + The package automatically detects the format of your files---no more guessing what format is *that* file, just pass them to the package;
   
-    + Supports all popular TCR and BCR analysis and post-analysis formats, including single-cell data: [ImmunoSEQ](https://www.immunoseq.com/), [IMGT](http://www.imgt.org/IMGTindex/IMGTHighV-QUEST.php), [MiTCR](https://github.com/milaboratory/mitcr/), [MiXCR](https://milaboratory.com/software/mixcr/), [MiGEC](https://milaboratory.com/software/migec/), [MigMap](https://github.com/mikessh/migmap), [VDJtools](https://milaboratory.com/software/vdjtools/), [tcR](https://github.com/imminfo/tcr), [AIRR](http://docs.airr-community.org/en/latest/), [10XGenomics](https://support.10xgenomics.com/single-cell-vdj/datasets/), ArcherDX. More coming in the future;
+    + Supports all popular TCR and BCR analysis and post-analysis formats, including single-cell data: [ImmunoSEQ](https://www.immunoseq.com/), [IMGT](http://www.imgt.org/IMGTindex/IMGTHighV-QUEST.php), [MiTCR](https://github.com/milaboratory/mitcr), [MiXCR](https://github.com/milaboratory/mixcr), [MiGEC](https://github.com/mikessh/migec), [MigMap](https://github.com/mikessh/migmap), [VDJtools](https://github.com/mikessh/vdjtools), [tcR](https://github.com/imminfo/tcr), [AIRR](http://docs.airr-community.org/en/latest/), [10XGenomics](https://www.10xgenomics.com/resources/datasets?menu%5Bproducts.name%5D=Single+Cell+Immune+Profiling), ArcherDX. More coming in the future;
 
     + Works on any data source you are comfortable with: R data frames, data tables from [data.table](https://rdatatable.gitlab.io/data.table/), databases like [MonetDB](https://github.com/MonetDB), Apache Spark data frames via [sparklyr](https://spark.rstudio.com/);
     
@@ -124,7 +124,7 @@ You can find the list of releases of `immunarch` here: https://github.com/immuno
 
 2. Beginner-friendly. Immune repertoire analysis made simple:
 
-    + Most methods are incorporated in a couple of main functions with clear naming---no more remembering tens and tens of functions with obscure names. For details see [link](https://immunarch.com/articles/v3_basic_analysis.html);
+    + Most methods are incorporated in a couple of main functions with clear naming---no more remembering tens and tens of functions with obscure names. For details see [link](https://immunarch.com/articles/web_only/v3_basic_analysis.html);
 
     + Repertoire overlap analysis *(common indices including overlap coefficient, Jaccard index and Morisita's overlap index)*. Tutorial is available [here](https://immunarch.com/articles/web_only/v4_overlap.html);
   
