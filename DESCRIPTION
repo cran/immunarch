@@ -1,13 +1,14 @@
 Package: immunarch
 Type: Package
 Title: Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires
-Version: 0.6.7
+Version: 0.6.8
 Authors@R: c(
     person("Vadim I.", "Nazarov", , "support@immunomind.io", c("aut", "cre")),
     person("Vasily O.", "Tsvetkov", , role = "aut"),
     person("Eugene", "Rumynskiy", , role = "aut"),
     person("Aleksandr A.", "Popov", , role = "aut"),
     person("Ivan", "Balashov", , role = "aut"),
+    person("Maria", "Volobueva", , role = "aut"),
     person("Anna", "Lorenc", , role = "ctb"),
     person("Daniel J.", "Moore", , role = "ctb"),
     person("Victor", "Greiff", , role = "ctb"),
@@ -30,8 +31,9 @@ Imports: factoextra (>= 1.0.4), fpc, UpSetR (>= 1.4.0), pheatmap (>=
         MASS (>= 7.3), Rtsne (>= 0.15), readxl (>= 1.3.1), shiny (>=
         1.4.0), shinythemes, airr, ggseqlogo, ggalluvial (>= 0.10.0),
         Rcpp (>= 1.0), magrittr, methods, scales, ggpubr (>= 0.2),
-        rlang (>= 0.4), plyr, dbplyr (>= 1.4.0), jsonlite, readr,
-        stringr, tibble, tidyselect, purrr
+        rlang (>= 0.4), plyr, purrr, stringdist, jsonlite, readr,
+        stringr, tibble, tidyselect, tidyr, igraph, ape, doParallel,
+        rlist, utils, glue, phangorn, uuid, stringi
 Depends: R (>= 4.0.0), ggplot2 (>= 3.1.0), dplyr (>= 0.8.0), dtplyr (>=
         1.0.0), data.table (>= 1.12.6), patchwork
 LinkingTo: Rcpp
@@ -41,17 +43,19 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 RoxygenNote: 7.1.2
 LazyData: true
+LazyDataCompression: xz
 NeedsCompilation: yes
-Packaged: 2021-10-29 09:35:12 UTC; user
+Packaged: 2022-05-04 14:29:38 UTC; user
 Author: Vadim I. Nazarov [aut, cre],
   Vasily O. Tsvetkov [aut],
   Eugene Rumynskiy [aut],
   Aleksandr A. Popov [aut],
   Ivan Balashov [aut],
+  Maria Volobueva [aut],
   Anna Lorenc [ctb],
   Daniel J. Moore [ctb],
   Victor Greiff [ctb],
   ImmunoMind [cph, fnd]
 Maintainer: Vadim I. Nazarov <support@immunomind.io>
 Repository: CRAN
-Date/Publication: 2021-10-29 12:00:07 UTC
+Date/Publication: 2022-05-04 15:30:02 UTC

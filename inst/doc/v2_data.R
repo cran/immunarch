@@ -13,8 +13,15 @@ library(immunarch)
 data(immdata)
 
 ## ---- eval=F------------------------------------------------------------------
-#  # To load the data from a single file (note that you don't need to specify the data format):
-#  file_path = paste0(system.file(package="immunarch"), "/extdata/io/Sample1.tsv.gz")
+#  #path argument is a path to the folder with your file or files including metadata file also(if you have one).
+#  immdata <- repLoad(path)
+
+## ---- eval=F------------------------------------------------------------------
+#  immdata <- repLoad('example')
+
+## ---- eval=F------------------------------------------------------------------
+#  #path to the folder with example data
+#  file_path = paste0(system.file(package="immunarch"), "/extdata/io/")
 #  immdata <- repLoad(file_path)
 
 ## ---- eval=F------------------------------------------------------------------

@@ -279,6 +279,7 @@ if (window.hljs) {
 
 
 
+
 <style type="text/css">
 .main-container {
   max-width: 940px;
@@ -299,6 +300,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -424,7 +428,7 @@ pre code {
 <li><p><code>&quot;migmap&quot;</code> - <a href="https://github.com/mikessh/migmap" class="uri">https://github.com/mikessh/migmap</a></p></li>
 <li><p><code>&quot;tcr&quot;</code> - <a href="https://imminfo.github.io/tcr/" class="uri">https://imminfo.github.io/tcr/</a></p></li>
 <li><p><code>&quot;vdjtools&quot;</code> - <a href="https://vdjtools-doc.readthedocs.io/en/master/" class="uri">https://vdjtools-doc.readthedocs.io/en/master/</a></p></li>
-<li><p><code>&quot;imgt&quot;</code> - <a href="http://www.imgt.org/HighV-QUEST/" class="uri">http://www.imgt.org/HighV-QUEST/</a></p></li>
+<li><p><code>&quot;imgt&quot;</code> - <a href="https://www.imgt.org/HighV-QUEST/" class="uri">https://www.imgt.org/HighV-QUEST/</a></p></li>
 <li><p><code>&quot;airr&quot;</code> - <a href="http://docs.airr-community.org/en/latest/datarep/overview.html" class="uri">http://docs.airr-community.org/en/latest/datarep/overview.html</a></p></li>
 <li><p><code>&quot;10x&quot;</code> - <a href="https://support.10xgenomics.com/single-cell-vdj/software/pipelines/latest/output/annotation" class="uri">https://support.10xgenomics.com/single-cell-vdj/software/pipelines/latest/output/annotation</a></p></li>
 <li><p><code>&quot;archer&quot;</code> - ArcherDX clonotype tables.</p></li>
@@ -434,9 +438,19 @@ pre code {
 </ul>
 <p>Please contact us if there are more file formats you want to be supported.</p>
 <p>For parsing IgBLAST results process the data with MigMap first.</p>
-<p>You can load the data either from a single file, a list of repertoire file paths or from a folder with repertoire files. A single file can be loaded as follows:</p>
-<pre class="r"><code># To load the data from a single file (note that you don&#39;t need to specify the data format):
-file_path = paste0(system.file(package=&quot;immunarch&quot;), &quot;/extdata/io/Sample1.tsv.gz&quot;)
+<p>You can load the data from a single file, a list of repertoire file paths, or from a folder with repertoire files.</p>
+<p><strong>Working with your files</strong></p>
+<p>If you have your files, you should just specify a path to your file or to a folder with files. Then load data using <code>repLoad</code>:</p>
+<pre class="r"><code>#path argument is a path to the folder with your file or files including metadata file also(if you have one).
+immdata &lt;- repLoad(path)</code></pre>
+<p><strong>Working with sample files</strong></p>
+<p>You could find a folder with example files <a href="https://github.com/immunomind/immunarch/releases/tag/0.6.7">here</a> (download and extract test_data.zip or test_data.tar.gz) and use it to test data loading without your own files.</p>
+<p>If you are not familiar with file paths, you can download example data to your working directory. You can obtain you working directory with <code>getwd()</code> command</p>
+<p>You could also download all files to the <code>&#39;example&#39;</code> folder in your working directory and load all of them by passing folder name to repLoad function in a quotes:</p>
+<pre class="r"><code>immdata &lt;- repLoad(&#39;example&#39;)</code></pre>
+<p>Also, example data are already downloaded with <code>immunarch</code> package. You can load all sample files using the following command:</p>
+<pre class="r"><code>#path to the folder with example data
+file_path = paste0(system.file(package=&quot;immunarch&quot;), &quot;/extdata/io/&quot;)
 immdata &lt;- repLoad(file_path)</code></pre>
 <p>In other cases you may want to provide a metadata file and locate it in the folder. It is necessary to name it exactly “metadata.txt”.</p>
 <pre class="r"><code># For instance you have a following structure in your folder:
@@ -600,9 +614,9 @@ list(data = res_db, meta = META)</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;downsample&quot;, 100)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
-##      98      94      89     100      80      93      90      98      87      99 
+##      96      97      92      99      88      95      87      99      88      98 
 ##     MS5     MS6 
-##      86      99</code></pre>
+##      88      99</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;sample&quot;, .n = 10)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
