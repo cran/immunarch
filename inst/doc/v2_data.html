@@ -415,12 +415,12 @@ pre code {
 <h1>Input / output</h1>
 <p>The package provides several IO functions:</p>
 <ul>
-<li><p><code>repLoad</code> - to load the repertoires, having compatible format.</p></li>
-<li><p><code>repSave</code> - to save changes and to write the repertoire data to a file in a specific format (<code>immunarch</code>, VDJtools).</p></li>
+<li><p><code>repLoad</code> - loads the repertoires having compatible format.</p></li>
+<li><p><code>repSave</code> - saves changes and writes the repertoire data to a file in a specific format (<code>immunarch</code>, VDJtools).</p></li>
 </ul>
 <p><code>repLoad</code> detects the input file format automatically. <code>immunarch</code> currently support the following immune repertoire data formats:</p>
 <ul>
-<li><p><code>&quot;immunarch&quot;</code> - current software tool, in case you forgot it :)</p></li>
+<li><p><code>&quot;immunarch&quot;</code> - current software tool, in case you forgot :)</p></li>
 <li><p><code>&quot;immunoseq&quot;</code> - <a href="https://www.immunoseq.com" class="uri">https://www.immunoseq.com</a></p></li>
 <li><p><code>&quot;mitcr&quot;</code> - <a href="https://github.com/milaboratory/mitcr" class="uri">https://github.com/milaboratory/mitcr</a></p></li>
 <li><p><code>&quot;mixcr&quot;</code> - <a href="https://github.com/milaboratory/mixcr" class="uri">https://github.com/milaboratory/mixcr</a></p></li>
@@ -436,23 +436,23 @@ pre code {
 <li><p><code>&quot;rtcr&quot;</code> - <a href="https://github.com/uubram/RTCR" class="uri">https://github.com/uubram/RTCR</a></p></li>
 <li><p><code>&quot;vidjil&quot;</code> - <a href="http://www.vidjil.org/" class="uri">http://www.vidjil.org/</a></p></li>
 </ul>
-<p>Please contact us if there are more file formats you want to be supported.</p>
+<p>Please contact us if there are more file formats you want supported.</p>
 <p>For parsing IgBLAST results process the data with MigMap first.</p>
 <p>You can load the data from a single file, a list of repertoire file paths, or from a folder with repertoire files.</p>
 <p><strong>Working with your files</strong></p>
 <p>If you have your files, you should just specify a path to your file or to a folder with files. Then load data using <code>repLoad</code>:</p>
-<pre class="r"><code>#path argument is a path to the folder with your file or files including metadata file also(if you have one).
+<pre class="r"><code>#path argument is a path to the folder with your file or files including the metadata file.
 immdata &lt;- repLoad(path)</code></pre>
 <p><strong>Working with sample files</strong></p>
 <p>You could find a folder with example files <a href="https://github.com/immunomind/immunarch/releases/tag/0.6.7">here</a> (download and extract test_data.zip or test_data.tar.gz) and use it to test data loading without your own files.</p>
-<p>If you are not familiar with file paths, you can download example data to your working directory. You can obtain you working directory with <code>getwd()</code> command</p>
-<p>You could also download all files to the <code>&#39;example&#39;</code> folder in your working directory and load all of them by passing folder name to repLoad function in a quotes:</p>
+<p>If you are not familiar with the file paths, you can download our mock data to your working directory. You can obtain working directory with <code>getwd()</code> command</p>
+<p>You could also download all files to the <code>&#39;example&#39;</code> folder in your working directory and load all of them by passing folder name to repLoad function in quotation marks:</p>
 <pre class="r"><code>immdata &lt;- repLoad(&#39;example&#39;)</code></pre>
-<p>Also, example data are already downloaded with <code>immunarch</code> package. You can load all sample files using the following command:</p>
+<p>The example data is already downloaded with <code>immunarch</code> package. You can load all sample files using the following command:</p>
 <pre class="r"><code>#path to the folder with example data
 file_path = paste0(system.file(package=&quot;immunarch&quot;), &quot;/extdata/io/&quot;)
 immdata &lt;- repLoad(file_path)</code></pre>
-<p>In other cases you may want to provide a metadata file and locate it in the folder. It is necessary to name it exactly “metadata.txt”.</p>
+<p>In other cases you may want to provide a metadata file and locate it in the folder. It is necessary to name it “metadata.txt”.</p>
 <pre class="r"><code># For instance you have a following structure in your folder:
 # &gt;_ ls
 # immunoseq1.txt
@@ -467,7 +467,7 @@ immdata &lt;- repLoad(file_path)
 print(names(immdata))
 
 # In order to do that your folder must contain metadata file named
-# exactly &quot;metadata.txt&quot;.
+# &quot;metadata.txt&quot;.
 
 # In R, when you load your data:
 # &gt; immdata &lt;- repLoad(&quot;path/to/your/folder/&quot;)
@@ -478,7 +478,7 @@ print(names(immdata))
 # &gt; immdata &lt;- repLoad(&quot;path/to/your/folder/&quot;)
 # &gt; names(immdata)
 # [1] &quot;data&quot; &quot;meta&quot;</code></pre>
-<p>Dummy metadata data frame look like this:</p>
+<p>Dummy metadata data frame looks like this:</p>
 <pre class="r"><code>as_tibble(data.frame(Sample = c(&quot;immunoseq1&quot;, &quot;immunoseq2&quot;, &quot;immunoseq3&quot;), stringsAsFactors = F))</code></pre>
 <pre><code>## # A tibble: 3 × 1
 ##   Sample    
@@ -486,7 +486,7 @@ print(names(immdata))
 ## 1 immunoseq1
 ## 2 immunoseq2
 ## 3 immunoseq3</code></pre>
-<p>The metadata file “metadata.txt” has to be tab delimited file with first column named “Sample” and any number of additional columns with arbitrary names. The first column should contain base names of files without extensions in your folder.</p>
+<p>The metadata file “metadata.txt” has to be a table with first column named “Sample” and any number of additional columns with any names. The first column should contain the base names of files without extensions in your folder.</p>
 <table>
 <thead>
 <tr class="header">
@@ -517,7 +517,7 @@ print(names(immdata))
 </tr>
 </tbody>
 </table>
-<p>In order to import data from the external databases you have to create a connection to this database and then load the data. Make sure that the table format in your database matches the <code>immunarch</code>’s format.</p>
+<p>In order to import data from the external databases you have to connect to this database and then load the data. Make sure that the table format in your database matches the <code>immunarch</code>’s format.</p>
 <p>To illustrate the use of external database, here is an example demonstrating data loading to the local MonetDB database:</p>
 <pre class="r"><code># Your list of repertoires in immunarch&#39;s format
 DATA
@@ -546,12 +546,12 @@ for (i in 1:length(DATA)) {
 
 # Your data is ready to use
 list(data = res_db, meta = META)</code></pre>
-<p><code>immunarch</code> is compatible with following sources:</p>
+<p><code>immunarch</code> is compatible with the following sources:</p>
 <ul>
-<li><p>R data frames (for common applications)</p></li>
-<li><p>R data tables (for speed, although requires lots of RAM)</p></li>
-<li><p>MonetDB-like databases that support both DBI and dplyr (best choice, although you have to be a bit familiar with dplyr)</p></li>
-<li><p>Apache Spark (if you are expierienced and comfortable with it)</p></li>
+<li><p>R data frames (for most applications)</p></li>
+<li><p>R data tables (for faster calculations, although they require a lot of RAM)</p></li>
+<li><p>MonetDB-like databases that support both DBI and dplyr (an optimal choice, although you have to be familiar with dplyr)</p></li>
+<li><p>Apache Spark (if you have experience with it)</p></li>
 </ul>
 </div>
 <div id="basic-data-manipulations-with-dplyr-and-immunarch" class="section level1">
@@ -583,14 +583,14 @@ list(data = res_db, meta = META)</code></pre>
 <pre class="r"><code>coding(immdata$data[[1]])</code></pre>
 <p>The next one operates in a similar fashion:</p>
 <pre class="r"><code>noncoding(immdata$data[[1]])</code></pre>
-<p>Now, the computation of the number of filtered sequences is straightforward:</p>
+<p>Now, the computation of the number of filtered sequences is rather straightforward:</p>
 <pre class="r"><code>nrow(inframes(immdata$data[[1]]))</code></pre>
 <p>And for the out-of-frame clonotypes:</p>
 <pre class="r"><code>nrow(outofframes(immdata$data[[1]]))</code></pre>
 </div>
 <div id="get-subset-of-clonotypes-with-a-specific-v-gene" class="section level2">
 <h2>Get subset of clonotypes with a specific V gene</h2>
-<p>It is simple to subset data frame according to labels in the specified index. In the example the resulting data frame contains only records with ‘TRBV10-1’ V gene:</p>
+<p>It is simple to subset data frame according to labels in the specified index. In this example the resulting data frame contains only records with ‘TRBV10-1’ V gene:</p>
 <pre class="r"><code>filter(immdata$data[[1]], V.name == &#39;TRBV10-1&#39;)</code></pre>
 <pre><code>## # A tibble: 24 × 15
 ##    Clones Proportion CDR3.nt    CDR3.aa V.name D.name J.name V.end D.start D.end
@@ -614,9 +614,9 @@ list(data = res_db, meta = META)</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;downsample&quot;, 100)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
-##      99      96      97      99      86      90      91     100      92      99 
+##      99      97      91      98      91      87      85      98      96      99 
 ##     MS5     MS6 
-##      86      99</code></pre>
+##      84     100</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;sample&quot;, .n = 10)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 

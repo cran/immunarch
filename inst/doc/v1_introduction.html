@@ -420,27 +420,29 @@ pre code {
 -->
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p><code>immunarch</code> is an R package designed to analyse T-cell receptor (TCR) and B-cell receptor (BCR) repertoires, aimed at medical scientists and bioinformaticians. The mission of <code>immunarch</code> is to make immune sequencing data analysis as effortless as possible and help you focus on research instead of coding. Follow us on <a href="https://twitter.com/immunomind">Twitter</a> for news and updates.</p>
+<p><code>immunarch</code> is an R package designed to analyse T-cell receptor (TCR) and B-cell receptor (BCR) repertoires, mainly tailored to medical scientists and bioinformaticians. The mission of <code>immunarch</code> is to make immune sequencing data analysis as effortless as possible and help you focus on research instead of coding. Follow us on <a href="https://twitter.com/immunomind">Twitter</a> for news and updates.</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
 <div id="latest-release-on-cran" class="section level3">
 <h3>Latest release on CRAN</h3>
 <p>In order to install <code>immunarch</code> execute the following command:</p>
 <pre class="r"><code>install.packages(&quot;immunarch&quot;)</code></pre>
-<p>That’s it, you can start using <code>immunarch</code> now! See the <a href="#quick-start">Quick Start</a> section below to dive into immune repertoire data analysis. If you run in any trouble with installation, take a look at the <a href="https://immunarch.com/articles/v1_introduction.html#installation-troubleshooting">Installation Troubleshooting</a> section.</p>
+<p>That’s it, you can start using <code>immunarch</code> now! See the <a href="#quick-start">Quick Start</a> section below to dive into immune repertoire data analysis. If you run in any trouble during installation, take a look at the <a href="https://immunarch.com/articles/v1_introduction.html#installation-troubleshooting">Installation Troubleshooting</a> section.</p>
 <p>Note: there are quite a lot of dependencies to install with the package because it installs all the widely-used packages for data analysis and visualisation. You got both the AIRR data analysis framework and the full Data Science package ecosystem with only one command, making <code>immunarch</code> the entry-point for single-cell &amp; immune repertoire Data Science.</p>
 </div>
 <div id="latest-release-on-github" class="section level3">
 <h3>Latest release on GitHub</h3>
 <p>If the above command doesn’t work for any reason, try installing <code>immunarch</code> directly from its repository:</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;) # skip this if you already installed devtools
-devtools::install_github(&quot;immunomind/immunarch&quot;)</code></pre>
+<pre class="r"><code>install.packages(c(&quot;devtools&quot;, &quot;pkgload&quot;)) # skip this if you already installed these packages
+devtools::install_github(&quot;immunomind/immunarch&quot;)
+devtools::reload(pkgload::inst(&quot;immunarch&quot;))</code></pre>
 </div>
 <div id="latest-pre-release-on-github" class="section level3">
 <h3>Latest pre-release on GitHub</h3>
-<p>Since releasing on CRAN is limited to one release per one-two months, you can install the latest pre-release version with bleeding edge features and optimisations directly from the code repository. In order to install the latest pre-release version, you need to execute only two commands:</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;) # skip this if you already installed devtools
-devtools::install_github(&quot;immunomind/immunarch&quot;, ref=&quot;dev&quot;)</code></pre>
+<p>Since releasing on CRAN is limited to one release per one or two months, you can install the latest pre-release version with all the bleeding edge and optimised features directly from the code repository. In order to install the latest pre-release version, you need to execute the following commands:</p>
+<pre class="r"><code>install.packages(c(&quot;devtools&quot;, &quot;pkgload&quot;)) # skip this if you already installed these packages
+devtools::install_github(&quot;immunomind/immunarch&quot;, ref=&quot;dev&quot;)
+devtools::reload(pkgload::inst(&quot;immunarch&quot;))</code></pre>
 <p>You can find the list of releases of <code>immunarch</code> here: <a href="https://github.com/immunomind/immunarch/releases" class="uri">https://github.com/immunomind/immunarch/releases</a></p>
 </div>
 </div>
@@ -467,20 +469,20 @@ immdata &lt;- repLoad(&quot;path/to/your/data&quot;)  # Replace it with the path
 </div>
 <div id="advanced-methods" class="section level3">
 <h3>Advanced methods</h3>
-<p>For advanced methods such as clonotype annotation, clonotype tracking, kmer analysis and public repertoire analysis see “Tutorials”.</p>
+<p>For advanced methods such as clonotype annotation, clonotype tracking, k-mer analysis and public repertoire analysis see “Tutorials”.</p>
 </div>
 </div>
 <div id="installation-troubleshooting" class="section level2">
 <h2>Installation troubleshooting</h2>
-<p>If you can not install <code>devtools</code>, check sections 1 and 2 below.</p>
-<p>If you run in any other trouble, try the following steps:</p>
+<p>If you cannot install <code>devtools</code>, check sections 1 and 2 below.</p>
+<p>If you run into any other trouble, try the following steps:</p>
 <ol style="list-style-type: decimal">
-<li><p>Check your R version. Run <code>version</code> command in the console to get your R versions. If the R version is below 3.5.0 (for example, <code>R version 3.1.0</code>), try updating your R version to the latest one. Note: if you try to install a package after the update and it still fails with the following message:</p>
+<li><p>Check your R version. Run <code>version</code> command in the console to get your R versions. If the R version is below 3.5.0 (for example, <code>R version 3.1.0</code>), try updating your R version to the most recent one. Note: if you try to install a package after the update and it still fails with the following message:</p>
 <pre><code>ERROR: dependencies ‘httr’, ‘usethis’ are not available for package ‘devtools’
 * removing ‘/home/ga/R/x86_64-pc-linux-gnu-library/3.5/devtools’
 Warning in install.packages :
   installation of package ‘devtools’ had non-zero exit status</code></pre>
-<p>it means that you need to re-install packages that were built under the previous R version. In the above example it would be packages <code>httr</code> and <code>usethis</code>. In order to re-install a package you need to execute the command <code>install.packages(&quot;package_name&quot;)</code>, where <code>package_name</code> is the name of the package to update. To find packages that need to be re-installed after updating R, you need to look for installation messages like this in the installation process:</p>
+<p>it means that you need to reinstall the packages that were built under the previous R versions. In the example above those would be the packages <code>httr</code> and <code>usethis</code>. In order to reinstall a package you need to execute the command <code>install.packages(&quot;package_name&quot;)</code>, where <code>package_name</code> is the name of the package to update. To find the packages that need to be reinstalled after updating R, you need to look for installation messages like this in the installation process:</p>
 <pre><code>ERROR: package ‘usethis’ was installed by an R version with different internals; it needs to be reinstalled for use with this R version</code></pre></li>
 <li><p>Check if your packages are outdated and update them. In RStudio you can run the “Update” button on top of the package list in the “Package” window. In R console you can run the <code>old.packages()</code> command to view a list of outdated packages. The following messages indicate that an update is required:</p>
 <pre><code>Error: package ‘dtplyr’ 0.0.3 was found, but &gt;= 1.0.0 is required by ‘immunarch’
@@ -492,7 +494,7 @@ Error in loadNamespace(j &lt;- i[[1L]], c(lib.loc, .libPaths()), versionCheck = 
 Calls: &lt;Anonymous&gt; ... namespaceImportFrom -&gt; asNamespace -&gt; loadNamespace
 Execution halted</code></pre></li>
 <li><p>For Mac users. Make sure to install XCode from App Store first and command line developers tools second by executing the following command in Terminal: <code>xcode-select –install</code></p></li>
-<li><p>For Mac users. If you have issues like old packages can’t be updated, or error messages such as <code>ld: warning: directory not found for option</code> or <code>ld: library not found for -lgfortran</code>, <a href="https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/">this link</a> will help you to fix the issue.</p></li>
+<li><p>For Mac users. If you have other issues, for instance some old packages can’t be updated, or you see an error message such as <code>ld: warning: directory not found for option</code> or <code>ld: library not found for -lgfortran</code>, <a href="https://thecoatlessprofessor.com/programming/rcpp-rcpparmadillo-and-os-x-mavericks--lgfortran-and--lquadmath-error/">this link</a> will help you to fix the issue.</p></li>
 <li><p>For Mac Mojave (1.14) users. If you run into the following error:</p>
 <pre><code>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/math.h:301:15: fatal error: &#39;math.h&#39; file not found
 #include_next &lt;math.h&gt;
@@ -523,9 +525,9 @@ Execution halted
 ERROR: lazy loading failed for package &#39;immunarch&#39;</code></pre>
 <p>Execute the following command in R and try again to install the package:</p>
 <pre><code>Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS=&quot;true&quot;)</code></pre></li>
-<li><p>For Windows users. If you have issues with the package installation, or if you want to change the folder for R packages, feel free to check <a href="https://community.rstudio.com/t/help-regarding-package-installation-renviron-rprofile-r-libs-r-libs-site-and-r-libs-user-oh-my/13888/8">this forum post</a>.</p></li>
-<li><p>For Windows users. Make sure to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. Before installation close RStudio, install Rtools and re-open it afterwards. To check if Rtools installed correctly, run the <code>devtools::find_rtools()</code> command (after installing the devtools package). If you have an error, check <a href="https://github.com/r-lib/devtools/issues/1941">this link</a> for help.</p></li>
-<li><p>If you can not install dependencies for <code>immunarch</code>, please try manual installation of all dependencies by executing the following command in R console:</p>
+<li><p>For Windows users. If you encounter issues with the package installation, or if you want to change the folder for R packages, feel free to check <a href="https://community.rstudio.com/t/help-regarding-package-installation-renviron-rprofile-r-libs-r-libs-site-and-r-libs-user-oh-my/13888/8">this forum post</a>.</p></li>
+<li><p>For Windows users. Make sure to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a>. Before installation close RStudio, install Rtools and reopen it afterwards. To check if Rtools installed correctly, run the <code>devtools::find_rtools()</code> command (after installing the devtools package). If you have an error, check <a href="https://github.com/r-lib/devtools/issues/1941">this link</a> for help.</p></li>
+<li><p>If you cannot install dependencies for <code>immunarch</code>, please consider manual installation of all dependencies by executing the following command in R console:</p>
 <pre><code>install.packages(c(&quot;rematch&quot;, &quot;prettyunits&quot;, &quot;forcats&quot;, &quot;cellranger&quot;, &quot;progress&quot;, &quot;zip&quot;, &quot;backports&quot;, &quot;ellipsis&quot;, &quot;zeallot&quot;, &quot;SparseM&quot;, &quot;MatrixModels&quot;, &quot;sp&quot;, &quot;haven&quot;, &quot;curl&quot;, &quot;readxl&quot;, &quot;openxlsx&quot;, &quot;minqa&quot;, &quot;nloptr&quot;, &quot;RcppEigen&quot;, &quot;utf8&quot;, &quot;vctrs&quot;, &quot;carData&quot;, &quot;pbkrtest&quot;, &quot;quantreg&quot;, &quot;maptools&quot;, &quot;rio&quot;, &quot;lme4&quot;, &quot;labeling&quot;, &quot;munsell&quot;, &quot;cli&quot;, &quot;fansi&quot;, &quot;pillar&quot;, &quot;viridis&quot;, &quot;car&quot;, &quot;ellipse&quot;, &quot;flashClust&quot;, &quot;leaps&quot;, &quot;scatterplot3d&quot;, &quot;modeltools&quot;, &quot;DEoptimR&quot;, &quot;digest&quot;, &quot;gtable&quot;, &quot;lazyeval&quot;, &quot;rlang&quot;, &quot;scales&quot;, &quot;tibble&quot;, &quot;viridisLite&quot;, &quot;withr&quot;, &quot;assertthat&quot;, &quot;glue&quot;, &quot;magrittr&quot;, &quot;pkgconfig&quot;, &quot;R6&quot;, &quot;tidyselect&quot;, &quot;BH&quot;, &quot;plogr&quot;, &quot;purrr&quot;, &quot;ggsci&quot;, &quot;cowplot&quot;, &quot;ggsignif&quot;, &quot;polynom&quot;, &quot;fastcluster&quot;, &quot;plyr&quot;, &quot;abind&quot;, &quot;dendextend&quot;, &quot;FactoMineR&quot;, &quot;mclust&quot;, &quot;flexmix&quot;, &quot;prabclus&quot;, &quot;diptest&quot;, &quot;robustbase&quot;, &quot;kernlab&quot;, &quot;GlobalOptions&quot;, &quot;shape&quot;, &quot;colorspace&quot;, &quot;stringi&quot;, &quot;hms&quot;, &quot;clipr&quot;, &quot;crayon&quot;, &quot;httpuv&quot;, &quot;mime&quot;, &quot;jsonlite&quot;, &quot;xtable&quot;, &quot;htmltools&quot;, &quot;sourcetools&quot;, &quot;later&quot;, &quot;promises&quot;, &quot;gridBase&quot;, &quot;RColorBrewer&quot;, &quot;yaml&quot;, &quot;ggplot2&quot;, &quot;dplyr&quot;, &quot;dtplyr&quot;, &quot;data.table&quot;, &quot;gridExtra&quot;, &quot;ggpubr&quot;, &quot;pheatma3&quot;, &quot;ggrepel&quot;, &quot;reshape2&quot;, &quot;DBI&quot;, &quot;factoextra&quot;, &quot;fpc&quot;, &quot;circlize&quot;, &quot;tidyr&quot;, &quot;Rtsne&quot;, &quot;readr&quot;, &quot;readxl&quot;, &quot;shiny&quot;, &quot;shinythemes&quot;, &quot;treemap&quot;, &quot;igraph&quot;, &quot;airr&quot;, &quot;ggseqlogo&quot;, &quot;UpSetR&quot;, &quot;stringr&quot;, &quot;ggalluvial&quot;, &quot;Rcpp&quot;))</code></pre></li>
 <li><p>If you encounter the following error while running the <code>devtools::install_local</code> function:</p>
 <pre><code>In normalizePath(path.expand(path), winslash, mustWork) :
@@ -534,7 +536,7 @@ ERROR: lazy loading failed for package &#39;immunarch&#39;</code></pre>
 In file.copy(x$path, bundle, recursive = TRUE) :
   problem copying No such file or directory</code></pre>
 <p>Check your path to the downloaded package archive file. It should not be “path/to/your/folder/with/immunarch.tar.gz”, but a path on your PC to the downloaded file, e.g., “C:/Users/UserName/Downloads/immunarch.tar.gz” or “/Users/UserName/Downloads/immunarch.tar.gz”.</p></li>
-<li><p>If troubles still persist, let us know via <a href="https://github.com/immunomind/immunarch/issues">GitHub</a> (preferably) or <a href="mailto:support@immunomind.io">support@immunomind.io</a> (in case of private data).</p></li>
+<li><p>If any of the troubles still persist, let us know via <a href="https://github.com/immunomind/immunarch/issues">GitHub</a> (preferably) or <a href="mailto:support@immunomind.io">support@immunomind.io</a> (in case of private data).</p></li>
 </ol>
 </div>
 </div>

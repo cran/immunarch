@@ -13,7 +13,7 @@ library(immunarch)
 data(immdata)
 
 ## ---- eval=F------------------------------------------------------------------
-#  #path argument is a path to the folder with your file or files including metadata file also(if you have one).
+#  #path argument is a path to the folder with your file or files including the metadata file.
 #  immdata <- repLoad(path)
 
 ## ---- eval=F------------------------------------------------------------------
@@ -39,7 +39,7 @@ data(immdata)
 #  print(names(immdata))
 #  
 #  # In order to do that your folder must contain metadata file named
-#  # exactly "metadata.txt".
+#  # "metadata.txt".
 #  
 #  # In R, when you load your data:
 #  # > immdata <- repLoad("path/to/your/folder/")

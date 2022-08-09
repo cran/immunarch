@@ -1,14 +1,14 @@
 Package: immunarch
 Type: Package
 Title: Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires
-Version: 0.6.9
+Version: 0.7.0
 Authors@R: c(
     person("Vadim I.", "Nazarov", , "support@immunomind.io", c("aut", "cre")),
     person("Vasily O.", "Tsvetkov", , role = "aut"),
     person("Eugene", "Rumynskiy", , role = "aut"),
     person("Aleksandr A.", "Popov", , role = "aut"),
     person("Ivan", "Balashov", , role = "aut"),
-    person("Maria", "Volobueva", , role = "aut"),
+    person("Maria", "Samokhina", , role = "aut"),
     person("Anna", "Lorenc", , role = "ctb"),
     person("Daniel J.", "Moore", , role = "ctb"),
     person("Victor", "Greiff", , role = "ctb"),
@@ -18,7 +18,7 @@ Contact: support@immunomind.io
 Description: A comprehensive framework for bioinformatics exploratory analysis of bulk and single-cell
     T-cell receptor and antibody repertoires. It provides seamless data loading, analysis and
     visualisation for AIRR (Adaptive Immune Receptor Repertoire) data, both bulk immunosequencing (RepSeq)
-    and single-cell sequencing (scRNAseq). It implements most of the widely used AIRR analysis methods,
+    and single-cell sequencing (scRNAseq). Immunarch implements most of the widely used AIRR analysis methods,
     such as: clonality analysis, estimation of repertoire similarities in distribution of clonotypes
     and gene segments, repertoire diversity analysis, annotation of clonotypes using external immune receptor
     databases and clonotype tracking in vaccination and cancer studies. A successor to our
@@ -33,7 +33,7 @@ Imports: factoextra (>= 1.0.4), fpc, UpSetR (>= 1.4.0), pheatmap (>=
         Rcpp (>= 1.0), magrittr, methods, scales, ggpubr (>= 0.2),
         rlang (>= 0.4), plyr, purrr, stringdist, jsonlite, readr,
         stringr, tibble, tidyselect, tidyr, igraph, ape, doParallel,
-        rlist, utils, glue, phangorn, uuid, stringi
+        rlist, utils, glue, phangorn, uuid, stringi, ggraph
 Depends: R (>= 4.0.0), ggplot2 (>= 3.1.0), dplyr (>= 0.8.0), dtplyr (>=
         1.0.0), data.table (>= 1.12.6), patchwork
 LinkingTo: Rcpp
@@ -45,17 +45,17 @@ RoxygenNote: 7.2.0
 LazyData: true
 LazyDataCompression: xz
 NeedsCompilation: yes
-Packaged: 2022-05-30 18:26:36 UTC; user
+Packaged: 2022-08-09 15:27:37 UTC; user
 Author: Vadim I. Nazarov [aut, cre],
   Vasily O. Tsvetkov [aut],
   Eugene Rumynskiy [aut],
   Aleksandr A. Popov [aut],
   Ivan Balashov [aut],
-  Maria Volobueva [aut],
+  Maria Samokhina [aut],
   Anna Lorenc [ctb],
   Daniel J. Moore [ctb],
   Victor Greiff [ctb],
   ImmunoMind [cph, fnd]
 Maintainer: Vadim I. Nazarov <support@immunomind.io>
 Repository: CRAN
-Date/Publication: 2022-05-30 19:00:02 UTC
+Date/Publication: 2022-08-09 22:00:02 UTC
