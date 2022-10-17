@@ -323,8 +323,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -332,16 +332,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -614,9 +607,9 @@ list(data = res_db, meta = META)</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;downsample&quot;, 100)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
-##      99      97      91      98      91      87      85      98      96      99 
+##      98      99      95      98      85      93      89      99      86      99 
 ##     MS5     MS6 
-##      84     100</code></pre>
+##      80     100</code></pre>
 <pre class="r"><code>ds = repSample(immdata$data, &quot;sample&quot;, .n = 10)
 sapply(ds, nrow)</code></pre>
 <pre><code>## A2-i129 A2-i131 A2-i133 A2-i132 A4-i191 A4-i192     MS1     MS2     MS3     MS4 
