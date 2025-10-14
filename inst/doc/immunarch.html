@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Immunarch overview</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Immunarch overview</h1>
+
+
+
+<div id="immunarch-multi-modal-immune-repertoire-analysis-in-r" class="section level1">
+<h1>🧬 immunarch – Multi-modal immune repertoire analysis in R</h1>
+<p><code>immunarch</code> brings a comprehensive analytics toolkit to
+build reproducible analysis pipelines for Adaptive Immune Receptor
+Repertoire (AIRR) data with a particular focus on designing personalized
+immunotherapies and vaccines. Key features are:</p>
+<ul>
+<li><p><strong>Multi-modal immune profiling:</strong> compute receptor-
+and repertoire-level statistics leveraging single-cell, spatial,
+immunogenicity or any other receptor annotations;</p></li>
+<li><p><strong>Immunomics at scale:</strong> work seamlessly with
+datasets that don’t fit in memory;</p></li>
+<li><p><strong>Immune biomarker discovery:</strong> stratify cohorts and
+timepoints, derive repertoire signatures (diversity/clonality, V/J
+usage, similarity), and track antigen-annotated clonotypes;</p></li>
+<li><p><strong>Feature engineering:</strong> build Machine
+Learning-ready feature tables (receptor-, ssample- and cohort-level)
+from core repertoire metrics and annotations, with consistent
+IDs/metadata for downstream statistics or modeling;</p></li>
+<li><p><strong>Modular, extendable, adaptable:</strong> add new analyses
+and metrics via a extension API, and use adapters to interoperate with
+other AIRR tools and formats.</p></li>
+</ul>
+<div id="why-immunarch" class="section level2">
+<h2>🤔 Why <code>immunarch</code>?</h2>
+<p>As immune repertoire sequencing becomes a mainstream technology,
+adopted by major platforms and integrated into more translational and
+clinical workflows, tooling expectations are changing rapidly. The pace
+of innovation and data growth sometimes outstrips what even the most
+dedicated tool developers can deliver.</p>
+<p>That’s why it’s the perfect moment to step back and rethink
+<strong>how</strong> and <strong>why</strong> we analyze AIRR data.
+Instead of racing to patch each new problem, we need to prepare for the
+<strong>next epoch</strong> of immunomics.</p>
+<p><strong>What defines this next epoch?</strong></p>
+<p>A massive shift in focus: from pure research towards biomarker
+discovery, personalized immunotherapies, and integration of immune
+repertoire data into real clinical decision-making.</p>
+<p>Today’s AIRR analysis must handle:</p>
+<ul>
+<li><p><strong>Multi-modal data:</strong> bulk and single-cell V(D)J,
+spatial transcriptomics, gene expression, clinical metadata, and antigen
+specificity – all together;</p></li>
+<li><p><strong>Massive scale:</strong> experiments that move from
+gigabytes to tens or hundreds of gigabytes, or even terabytes;</p></li>
+<li><p><strong>Reproducibility and collaboration:</strong> workflows
+that need to be shared, versioned, and rerun months or years later,
+sometimes by new teams.</p></li>
+</ul>
+<p>With this new landscape, the <strong>how</strong> and
+<strong>why</strong> of AIRR data analysis are evolving:</p>
+<ul>
+<li><p>The focus is moving from “can I parse my data?” to “can I
+robustly extract insights, find biomarkers, and build ML-ready features
+for discovery or diagnostics?”</p></li>
+<li><p>It’s not enough for a toolkit to just work. It needs to scale,
+interoperate, and empower new kinds of science, including complex Deep
+Learning and foundation models.</p></li>
+</ul>
+<p>By taking a step back and rethinking the core “how” and “why” of AIRR
+analysis, <code>immunarch</code> prepares you for the next epoch of
+immunomics – so your science is ready, whatever comes next.</p>
+<hr />
+<blockquote>
+<p>[!WARNING] <code>immunarch</code> is evolving towards
+<code>1.0</code> version and undergoing huge changes. Please check the
+updates here: <a href="https://github.com/immunomind/immunarch/issues/432" class="uri">https://github.com/immunomind/immunarch/issues/432</a></p>
+<p>To install the latest pre-1.0 version, use
+<code>pak::pkg_install(&quot;immunomind/immunarch@0.9.1&quot;)</code></p>
+<p>To install the latest 1.0 pre-release version, use
+<code>pak::pkg_install(&quot;immunomind/immunarch&quot;)</code></p>
+</blockquote>
+<hr />
+<ul>
+<li>🤔 <a href="#id_-why--immundata-">Why
+<code>immundata</code>?</a></li>
+<li>📦 <a href="#id_-installation">Installation</a></li>
+<li>⚡ <a href="#id_-quick-start">Quick Start</a></li>
+<li><a href="#id_-documentation">📄 Documentation</a></li>
+<li><a href="#id_-bugs-and-issues">🪲 Bugs and Issues</a></li>
+<li>🏷 <a href="#id_-about">About</a>
+<ul>
+<li><a href="#citation">Citation</a></li>
+<li><a href="#license">License</a></li>
+<li><a href="#author-and-contributors">Author and contributors</a></li>
+<li><a href="#commercial-usage">Commercial usage</a></li>
+</ul></li>
+</ul>
+<hr />
+</div>
+<div id="installation" class="section level2">
+<h2>📦 Installation</h2>
+<div id="prerequisites" class="section level3">
+<h3>Prerequisites</h3>
+<p>Before installing any release or pre-release version of
+<code>immunarch</code>, please install <code>pak</code> that will
+simplify the installation of any package, not just
+<code>immunarch</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pak&quot;</span>, <span class="at">repos =</span> <span class="fu">sprintf</span>(<span class="st">&quot;https://r-lib.github.io/p/pak/stable/%s/%s/%s&quot;</span>, .Platform<span class="sc">$</span>pkgType, <span class="fu">R.Version</span>()<span class="sc">$</span>os, <span class="fu">R.Version</span>()<span class="sc">$</span>arch))</span></code></pre></div>
+<p>More info if needed is available on <a href="https://pak.r-lib.org/#arrow_down-installation">pak
+website</a>.</p>
+</div>
+<div id="install-the-latest-version" class="section level3">
+<h3>Install the latest version</h3>
+<p>To install the latest release of <code>immunarch</code>, simply
+run:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">&quot;immunomind/immunarch&quot;</span>)</span></code></pre></div>
+<p>Mind that this will install the package from our GitHub instead of
+CRAN. This method is much preferred due to limitations of CRAN and
+reliance on other packages, which are distributed via <code>pak</code>
+as well.</p>
+</div>
+<div id="other-installation-options" class="section level3">
+<h3>Other installation options</h3>
+<p>We will periodically release <code>immunarch</code> on CRAN. To
+install it from CRAN, run</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">&quot;immunarch&quot;</span>)</span></code></pre></div>
+<p>If you are willing to try unstable yet bleeding edge features, or if
+there are some hot fix for your open GitHub ticket, please install the
+development version:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">&quot;immunomind/immunarch@dev&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="quick-start" class="section level2">
+<h2>⚡ Quick Start</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Install `pak` - a blazingly-fast package manager</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pak&quot;</span>, <span class="at">repos =</span> <span class="fu">sprintf</span>(<span class="st">&quot;https://r-lib.github.io/p/pak/stable/%s/%s/%s&quot;</span>, .Platform<span class="sc">$</span>pkgType, <span class="fu">R.Version</span>()<span class="sc">$</span>os, <span class="fu">R.Version</span>()<span class="sc">$</span>arch))</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Install and load immunarch along with the pre-packaged data</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_install</span>(<span class="st">&quot;immundata/immunarch&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="fu">library</span>(immunarch)</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>immdata <span class="ot">&lt;-</span> <span class="fu">get_test_idata</span>() <span class="sc">|&gt;</span> <span class="fu">agg_repertoires</span>(<span class="st">&quot;Therapy&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># In just 4 lines of code you get the essential AIRR statistics</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="fu">airr_stats_genes</span>(immdata, <span class="at">gene_col =</span> <span class="st">&quot;v_call&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="fu">airr_public_jaccard</span>(immdata)</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="fu">airr_clonality_prop</span>(immdata)</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="fu">airr_diversity_pielou</span>(immdata)</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co"># Use your own data by reading sample files from the metadata file</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>mdtable <span class="ot">&lt;-</span> <span class="fu">read_metadata</span>(<span class="st">&quot;data/metadata.csv&quot;</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a>immdata <span class="ot">&lt;-</span> <span class="fu">read_repertoires</span>(<span class="st">&quot;&lt;metadata&gt;&quot;</span>, <span class="at">metadata =</span> mdtable)</span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a><span class="co"># Use your own data by reading sample files directly</span></span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a>mdtable <span class="ot">&lt;-</span> <span class="fu">read_metadata</span>(<span class="st">&quot;data/metadata.csv&quot;</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a>immdata <span class="ot">&lt;-</span> <span class="fu">read_repertoires</span>(<span class="st">&quot;data/*.tsv.gz&quot;</span>, <span class="at">metadata =</span> mdtable)</span></code></pre></div>
+<p>Oh, and one small thing. Even if you have tens of gigabytes of the
+data, you won’t need to adapt the code to a server. The code will be
+exactly the same — <code>immunarch</code> got your back thanks to <a href="https://github.com/immunomind/immundata/"><code>immundata</code></a>.</p>
+</div>
+<div id="documentation" class="section level2">
+<h2>📄 Documentation</h2>
+<p>To get a list of available methods and their descriptions, run the
+default help command in R on specific functions or on a function family
+prefix:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># This is the same</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>?airr_stats</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="co"># as this</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>?airr_stats_genes</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co"># Basic statistics - gene usage, length distribution</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>?airr_stats</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Public receptor indices - overlap, jaccard, morisita</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>?airr_public</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co"># Clonality analysis - clonal lines, occupied space, clonal space homeostasis</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>?airr_clonality</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co"># Diversity analysis - pielou, shannon, chao1</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>?airr_diversity</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="co"># ... more to come ...</span></span></code></pre></div>
+<p>More detailed documentation, guides and comprehensive tutorials are
+available on the ecosystem website: <a href="https://immunomind.github.io/docs/">https://immunomind.github.io/docs/</a>.</p>
+</div>
+<div id="bugs-and-issues" class="section level2">
+<h2>🪲 Bugs and Issues</h2>
+<p>The mission of <code>immunarch</code> is to make bulk and single-cell
+immune repertoires analysis painless. All bug reports, documentation
+improvements, enhancements and ideas are appreciated. Just let us know
+via <a href="https://github.com/immunomind/immunarch/issues">GitHub</a>
+(preferably) or <a href="mailto:support@immunomind.com">support@immunomind.com</a> (in case
+of private data).</p>
+<p>Bug reports must:</p>
+<ol style="list-style-type: decimal">
+<li>Include a short, self-contained R snippet reproducing the
+problem.</li>
+<li>Add a minimal data sample for us to reproduce the problem. In case
+of sensitive data you can send it to <a href="mailto:support@immunomind.com">support@immunomind.com</a> instead
+of GitHub issues.</li>
+<li>Explain why the current behavior is wrong/not desired and what you
+expect instead.</li>
+<li>If the issue is about visualisations, please attach a picture to the
+issue. In other case we wouldn’t be able to reproduce the bug and fix
+it.</li>
+</ol>
+<p>We are always open to contributions. There are three ways to
+contribute:</p>
+<ol style="list-style-type: decimal">
+<li><p>Create an issue <a href="https://github.com/immunomind/immunarch/issues">here</a> and
+describe what would you like to improve or discuss.</p></li>
+<li><p>Create an issue or find one <a href="https://github.com/immunomind/immunarch/issues">here</a>, fork the
+repository and make a pull request with the bugfix or
+improvement.</p></li>
+<li><p>Find an existing issue and help others resolve this.</p></li>
+</ol>
+</div>
+<div id="about" class="section level2">
+<h2>🏷 About</h2>
+<div id="citation" class="section level3">
+<h3>Citation</h3>
+<blockquote>
+<p>Temporary citation is below. The main manuscript is in preparation.
+Preprint on BioArxiv is coming soon as of 2025.</p>
+</blockquote>
+<p>ImmunoMind Team. (2019). immunarch: An R Package for Painless
+Bioinformatics Analysis of T-Cell and B-Cell Immune Repertoires. Zenodo.
+<a href="http://doi.org/10.5281/zenodo.3367200" class="uri">http://doi.org/10.5281/zenodo.3367200</a></p>
+<p>BibTex:</p>
+<pre><code>@misc{immunomind_team_2019_3367200,
+  author       = {{ImmunoMind Team}},
+  title        = {{immunarch: An R Package for Painless Bioinformatics Analysis 
+                    of T-Cell and B-Cell Immune Repertoires}},
+  month        = aug,
+  year         = 2019,
+  doi          = {10.5281/zenodo.3367200},
+  url          = {https://doi.org/10.5281/zenodo.3367200}
+}</code></pre>
+<p>For EndNote citation import the <a href="https://gitlab.com/immunomind/immunarch/raw/master/immunarch-citation.xml?inline=false"><code>immunarch-citation.xml</code></a>
+file.</p>
+</div>
+<div id="license" class="section level3">
+<h3>License</h3>
+<p>The package is freely distributed under the Apache-2.0 license. You
+can read more about it <a href="https://www.tldrlegal.com/license/apache-license-2-0-apache-2-0">here</a>.</p>
+</div>
+<div id="author-and-contributors" class="section level3">
+<h3>Author and contributors</h3>
+<ul>
+<li><strong>Vadim I. Nazarov – main author and developer</strong></li>
+<li>Vasily Tsvetkov</li>
+<li>Aleksandr Popov</li>
+<li>Ivan Balashov</li>
+</ul>
+</div>
+<div id="commercial-usage" class="section level3">
+<h3>Commercial usage</h3>
+<p><code>immunarch</code> is free to use for commercial usage as per
+Apache-2.0 license. However, corporate users will not get a prioritized
+support for <code>immunarch</code>- or AIRR-related issues. The priority
+of open-source tool <code>immunarch</code> is open-source science.</p>
+<p>If you are looking for prioritized support and setting up your data
+pipelines, consider contacting <a href="https://www.linkedin.com/in/vdnaz/">Vadim Nazarov</a> for
+commercial consulting / support options / workshops and training
+sessions / designing data platforms and machine learning systems for
+multi-omics / or anything related.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
